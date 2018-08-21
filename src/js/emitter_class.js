@@ -1,4 +1,22 @@
-class Emitter {
+class Subscription {
+    constructor(event, callback, event_listeners, key) {
+        this.event = event;
+        this.callback = callback;
+        this.event_listeners = event_listeners;
+        this.key = key;
+    }
+
+    release() {
+        let ret = false;
+        if (this.event_listeners[this.key]) {
+            delete this.event_listeners[this.key];
+            ret = true;
+        }
+        return ret;
+    }
+}
+
+export default class Emitter {
     constructor() {
         this.events = {};
     }
@@ -17,23 +35,5 @@ class Emitter {
         return subs.forEach(function (sub) {
             return sub.callback.call(sub, params);
         });
-    }
-}
-
-class Subscription {
-    constructor(event, callback, event_listeners, key) {
-        this.event = event;
-        this.callback = callback;
-        this.event_listeners = event_listeners;
-        this.key = key;
-    }
-
-    release() {
-        let ret = false;
-        if (this.event_listeners[this.key]) {
-            delete this.event_listeners[this.key];
-            ret = true;
-        }
-        return ret;
     }
 }

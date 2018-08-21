@@ -34,3 +34,4 @@ Emitter.prototype.emit = function (event_name, ...params) {
     });
 }
 
+module.exports = Emitter
